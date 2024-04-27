@@ -28,6 +28,7 @@ import com.webauthn4j.validator.exception.TrustAnchorNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import java.security.cert.TrustAnchor;
+import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
@@ -77,6 +78,20 @@ class DefaultCertPathTrustworthinessValidatorTest {
         assertThrows(TrustAnchorNotFoundException.class,
                 () -> target.validate(aaguid, attestationStatement)
         );
+    }
+
+    @Test
+    void validate_with_trustAnchor_which_equals_to_x5c() {
+
+        X509Certificate attestationCertificate = TestAttestationUtil.load3tierTestAttestationCertificatePath().getEndEntityAttestationCertificate().getCertificate();
+        X509Certificate attestationCertificateLoadedAnotherTime = TestAttestationUtil.load3tierTestAttestationCertificatePath().getEndEntityAttestationCertificate().getCertificate();
+
+        Set<TrustAnchor> trustAnchors = CertificateUtil.generateTrustAnchors(Collections.singletonList(attestationCertificate));
+        when(trustAnchorRepository.find((AAGUID) any())).thenReturn(trustAnchors);
+
+        AttestationCertificatePath attestationCertificatePath = new AttestationCertificatePath(attestationCertificateLoadedAnotherTime, Collections.emptyList());
+        CertificateBaseAttestationStatement attestationStatement = TestAttestationStatementUtil.createBasicPackedAttestationStatement(attestationCertificatePath);
+        target.validate(aaguid, attestationStatement);
     }
 
     @Test

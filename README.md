@@ -50,7 +50,7 @@ If you are using Maven, just add the webauthn4j as a dependency:
 <properties>
   ...
   <!-- Use the latest version whenever possible. -->
-  <webauthn4j.version>0.20.8.RELEASE</webauthn4j.version>
+  <webauthn4j.version>0.23.0.RELEASE</webauthn4j.version>
   ...
 </properties>
 
@@ -75,7 +75,7 @@ self-contained bootstrap mechanism for the build.
 ### Prerequisites
 
 Java15 or later is required to build WebAuthn4J.
-To use WebAuthn4J library, JDK8 is OK if you don't need EdDSA support.
+To use WebAuthn4J library, JDK11 is OK if you don't need EdDSA support.
 
 ### Checkout sources
 

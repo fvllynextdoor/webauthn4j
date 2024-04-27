@@ -69,10 +69,12 @@ class PublicKeyCredentialTest {
                 extensions
         );
         PublicKeyCredential<AuthenticatorAttestationResponse, RegistrationExtensionClientOutput> credential = clientPlatform.create(credentialCreationOptions);
+        //noinspection deprecation
         assertAll(
                 () -> assertThat(credential.getType()).isEqualTo(PublicKeyCredentialType.PUBLIC_KEY.getValue()),
                 () -> assertThat(credential.getId()).isNotEmpty(),
                 () -> assertThat(credential.getRawId()).isNotEmpty(),
+                () -> assertThat(credential.getResponse()).isInstanceOf(AuthenticatorAttestationResponse.class),
                 () -> assertThat(credential.getAuthenticatorResponse()).isInstanceOf(AuthenticatorAttestationResponse.class),
                 () -> assertThat(credential.getClientExtensionResults()).isNotNull()
         );
@@ -81,8 +83,8 @@ class PublicKeyCredentialTest {
     @Test
     void equals_hashCode_test() {
 
-        PublicKeyCredential<AuthenticatorAttestationResponse, RegistrationExtensionClientOutput> instanceA = new PublicKeyCredential<>(new byte[32], null, new AuthenticationExtensionsClientOutputs<>());
-        PublicKeyCredential<AuthenticatorAttestationResponse, RegistrationExtensionClientOutput> instanceB = new PublicKeyCredential<>(new byte[32], null, new AuthenticationExtensionsClientOutputs<>());
+        PublicKeyCredential<AuthenticatorAttestationResponse, RegistrationExtensionClientOutput> instanceA = new PublicKeyCredential<>(new byte[32], null, AuthenticatorAttachment.PLATFORM, new AuthenticationExtensionsClientOutputs<>());
+        PublicKeyCredential<AuthenticatorAttestationResponse, RegistrationExtensionClientOutput> instanceB = new PublicKeyCredential<>(new byte[32], null, AuthenticatorAttachment.PLATFORM, new AuthenticationExtensionsClientOutputs<>());
 
         assertAll(
                 () -> assertThat(instanceA).isEqualTo(instanceB),

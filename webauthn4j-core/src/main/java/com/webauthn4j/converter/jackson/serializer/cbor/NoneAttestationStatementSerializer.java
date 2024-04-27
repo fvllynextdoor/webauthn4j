@@ -14,9 +14,15 @@
  * limitations under the License.
  */
 
-package com.webauthn4j.metadata;
+package com.webauthn4j.converter.jackson.serializer.cbor;
 
-class MetadataBLOBBasedMetadataStatementRepositoryTest {
+import com.webauthn4j.data.attestation.statement.NoneAttestationStatement;
 
+import java.util.Collections;
 
+public class NoneAttestationStatementSerializer extends AbstractCtapCanonicalCborSerializer<NoneAttestationStatement> {
+
+    public NoneAttestationStatementSerializer() {
+        super(NoneAttestationStatement.class, Collections.emptyList());
+    }
 }
